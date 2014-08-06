@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<douban.pageslider.ArticleItem
+    android:id="@+id/root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_primary_light">
+
+    <douban.pageslider.PullToRefreshWebPageView
+        android:id="@id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:ptrAnimationStyle="flip"
+        app:ptrOverScroll="false"
+        app:ptrRotateDrawableWhilePulling="false"
+        app:ptrHeaderTextAppearance="@style/PtrHeaderTextAppearance"
+        app:ptrSubHeaderTextAppearance="@style/PtrSubHeaderTextAppearance"/>
+
+</douban.pageslider.ArticleItem>

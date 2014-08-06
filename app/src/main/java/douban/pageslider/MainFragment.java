@@ -1,10 +1,12 @@
 package douban.pageslider;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,6 +17,8 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import douban.pageslider.controller.PageSwitchController;
+import douban.pageslider.datasource.NoMoreDataSource;
 import douban.pageslider.model.Post;
 import douban.pageslider.model.Stream;
 
@@ -52,6 +56,18 @@ public class MainFragment extends Fragment {
         mAdapter = new CurrentAdapter();
         mListView.setAdapter(mAdapter);
         mListView.setEmptyView(mEmptyView);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                PageSwitchController.getInstance().registerDataSource(new NoMoreDataSource<Post>());
+                PageSwitchController.getInstance().addInitialData(mAdapter.mData, i);
+
+                final Post post = mAdapter.getItem(i);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(DetailActivity.KEY_EXTRA_POST, post);
+                getActivity().startActivity(intent);
+            }
+        });
 
         // request api
         Api.getCurrentList(getActivity(), new Response.Listener<Stream>() {
@@ -71,7 +87,7 @@ public class MainFragment extends Fragment {
         });
     }
 
-    static class CurrentAdapter extends BaseAdapter {
+    class CurrentAdapter extends BaseAdapter {
 
         public ArrayList<Post> mData = new ArrayList<Post>();
 
@@ -112,13 +128,13 @@ public class MainFragment extends Fragment {
             } else {
                 holder = (Holder) view.getTag();
             }
-            holder.bind(getItem(i));
+            holder.bind(mData, i);
             return view;
         }
 
     }
 
-    static class Holder {
+    class Holder {
         @InjectView(R.id.post_title_text)
         TextView mTitle;
         @InjectView(R.id.post_content_text)
@@ -128,12 +144,24 @@ public class MainFragment extends Fragment {
             ButterKnife.inject(this, view);
         }
 
-        public void bind(Post post) {
-            if (null == post) {
+        public void bind(final ArrayList<Post> data, final int position) {
+            if (null == data || data.isEmpty()) {
                 return;
             }
+            final Post post = data.get(position);
             mTitle.setText(post.mTitle);
             mContent.setText(post.mShortDescription);
+            mContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PageSwitchController.getInstance().registerDataSource(new NoMoreDataSource<Post>());
+                    PageSwitchController.getInstance().addInitialData(mAdapter.mData, position);
+
+                    Intent intent = new Intent(getActivity(), DetailActivity.class);
+                    intent.putExtra(DetailActivity.KEY_EXTRA_POST, post);
+                    getActivity().startActivity(intent);
+                }
+            });
         }
     }
 }

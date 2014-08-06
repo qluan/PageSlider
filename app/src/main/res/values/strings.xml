@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PageSlider</string>
+    <string name="app_name">每日精选</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="page_nav_no_next_page_title">已经是最后一篇了</string>
+    <string name="page_nav_prev_page_title_format">上一篇：%1$s</string>
+    <string name="page_nav_next_page_title_format">下一篇：%1$s</string>
+    <string name="page_nav_pull_to_next_page">上拉翻页</string>
 
 </resources>

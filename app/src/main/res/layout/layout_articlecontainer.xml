@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<douban.pageslider.ArticleContainer xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/article_container">
+
+    <include layout="@layout/layout_article"
+             android:id="@+id/current_article" />
+
+    <include layout="@layout/layout_article"
+             android:id="@+id/next_article" />
+</douban.pageslider.ArticleContainer>

@@ -9,6 +9,12 @@
                 tools:context=".MyActivity$PlaceholderFragment"
     android:background="@drawable/background_primary_light">
 
+    <ImageView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/empty_image"/>
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -16,11 +22,5 @@
         android:divider="@drawable/list_divider"
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector"/>
-
-    <ImageView
-        android:id="@+id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/empty_image"/>
 
 </FrameLayout>
