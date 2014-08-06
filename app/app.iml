@@ -61,6 +61,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Android 4.2.2" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="YoumiSdk_v4.09_2014-06-16" level="project" />
     <orderEntry type="library" exported="" name="gsonvolley" level="project" />
     <orderEntry type="library" exported="" name="gdt_mob_release_v4.0.448" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />

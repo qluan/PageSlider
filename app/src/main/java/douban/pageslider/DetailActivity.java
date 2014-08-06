@@ -4,7 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+
+import net.youmi.android.spot.SpotDialogListener;
+import net.youmi.android.spot.SpotManager;
 
 import douban.pageslider.model.Post;
 
@@ -21,6 +25,17 @@ public class DetailActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
+            @Override
+            public void onShowSuccess() {
+                Log.i("Youmi", "onShowSuccess");
+            }
+
+            @Override
+            public void onShowFailed() {
+                Log.i("Youmi", "onShowFailed");
+            }
+        });
         setupView();
     }
 

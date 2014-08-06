@@ -11,6 +11,9 @@ import android.widget.FrameLayout;
 import com.qq.e.splash.SplashAd;
 import com.qq.e.splash.SplashAdListener;
 
+import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotManager;
+
 
 /**
  * Created by luanqian on 2014/8/2.
@@ -25,6 +28,9 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        AdManager.getInstance(this).init("4fba6ece578e1822", "29d6a8ba68be8910", false);
+        SpotManager.getInstance(this).loadSpotAds();
+
         mHandler = new Handler(Looper.getMainLooper());
         mStartTime = System.currentTimeMillis();
         bindSplashScreen();
