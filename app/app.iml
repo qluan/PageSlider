@@ -62,6 +62,7 @@
     <orderEntry type="jdk" jdkName="Android 4.2.2" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="gsonvolley" level="project" />
+    <orderEntry type="library" exported="" name="gdt_mob_release_v4.0.448" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />
