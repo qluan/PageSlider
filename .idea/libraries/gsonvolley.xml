@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="gsonvolley">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/gsonvolley.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
