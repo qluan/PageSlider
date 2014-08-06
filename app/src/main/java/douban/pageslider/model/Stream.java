@@ -3,6 +3,7 @@ package douban.pageslider.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public class Stream{
 
     @Expose
     @SerializedName("posts")
-    public List<Post> mPosts;
+    public ArrayList<Post> mPosts;
 }
