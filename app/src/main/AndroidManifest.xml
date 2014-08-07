@@ -11,9 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -22,18 +24,20 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="GDT_AD_APPID"
-            android:value="1101981396" />
+            android:value="1101981396"/>
         <meta-data
-            android:value="53e2dffdfd98c539b8019d0b"
-            android:name="UMENG_APPKEY" />
+            android:name="UMENG_APPKEY"
+            android:value="53e2dffdfd98c539b8019d0b"/>
         <meta-data
-            android:value="main"
-            android:name="UMENG_CHANNEL"/>
+            android:name="UMENG_CHANNEL"
+            android:value="main"/>
+
         <activity
             android:name=".SplashActivity"
             android:configChanges="screenSize|keyboardHidden|locale"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -51,40 +55,51 @@
             android:name=".DetailActivity"
             android:configChanges="screenSize|keyboardHidden|locale"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"/>
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
         <!-- integrate youmi ad start-->
-        <meta-data android:name="YOUMI_CHANNEL"
-                   android:value="1024" >
+        <meta-data
+            android:name="YOUMI_CHANNEL"
+            android:value="1024">
         </meta-data>
         <activity
             android:name="net.youmi.android.AdBrowser"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            android:screenOrientation="portrait">
         </activity>
         <service
             android:name="net.youmi.android.AdService"
-            android:exported="false" >
+            android:exported="false">
         </service>
         <receiver
-            android:name="net.youmi.android.AdReceiver" >
+            android:name="net.youmi.android.AdReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 
         <activity
             android:name="net.youmi.android.SmartBannerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
-            android:theme="@style/Transparent">
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait">
         </activity>
         <service
             android:name="net.youmi.android.SmartBannerService"
             android:exported="false">
         </service>
         <!-- integrate youmi ad end-->
+
+        <!-- integrate duomeng ad start -->
+        <activity
+            android:name="cn.domob.android.ads.DomobActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="portrait"/>
+
+        <!-- integrate duomeng ad end -->
 
     </application>
 

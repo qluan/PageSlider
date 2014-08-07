@@ -1,7 +1,7 @@
 package douban.pageslider;
 
-import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;

@@ -64,6 +64,7 @@
     <orderEntry type="library" exported="" name="YoumiSdk_v4.09_2014-06-16" level="project" />
     <orderEntry type="library" exported="" name="gsonvolley" level="project" />
     <orderEntry type="library" exported="" name="gdt_mob_release_v4.0.448" level="project" />
+    <orderEntry type="library" exported="" name="domob_android_sdk" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />

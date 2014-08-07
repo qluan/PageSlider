@@ -1,11 +1,7 @@
 package douban.pageslider;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -28,26 +24,28 @@ public class DetailActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        MobclickAgent.onEvent(this, "[youmi][detailpage]oncreate");
-        SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
-            @Override
-            public void onShowSuccess() {
-                Log.i("Youmi", "onShowSuccess");
-                MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onSuccessShow");
-            }
+        if (Constants.ENABLE_YouMi_AD) {
+            MobclickAgent.onEvent(this, "[youmi][detailpage]oncreate");
+            SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
+                @Override
+                public void onShowSuccess() {
+                    Log.i("Youmi", "onShowSuccess");
+                    MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onSuccessShow");
+                }
 
-            @Override
-            public void onShowFailed() {
-                Log.i("Youmi", "onShowFailed");
-                MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onFailShow");
-            }
-        });
+                @Override
+                public void onShowFailed() {
+                    Log.i("Youmi", "onShowFailed");
+                    MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onFailShow");
+                }
+            });
+        }
         setupView();
     }
 
     private void setupView() {
         mFragment = WebPageFragment.newInstance((Post)getIntent().getParcelableExtra(KEY_EXTRA_POST));
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, mFragment);
         ft.commitAllowingStateLoss();
     }
