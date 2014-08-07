@@ -28,6 +28,7 @@ public class DetailActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        MobclickAgent.onEvent(this, "[youmi][detailpage]oncreate");
         SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
             @Override
             public void onShowSuccess() {
