@@ -23,6 +23,12 @@
         <meta-data
             android:name="GDT_AD_APPID"
             android:value="1101981396" />
+        <meta-data
+            android:value="53e2dffdfd98c539b8019d0b"
+            android:name="UMENG_APPKEY" />
+        <meta-data
+            android:value="main"
+            android:name="UMENG_CHANNEL"/>
         <activity
             android:name=".SplashActivity"
             android:configChanges="screenSize|keyboardHidden|locale"

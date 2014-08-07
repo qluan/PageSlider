@@ -1,10 +1,11 @@
 package douban.pageslider;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class MainActivity extends Activity {
+import douban.pageslider.activity.BaseActivity;
+
+public class MainActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

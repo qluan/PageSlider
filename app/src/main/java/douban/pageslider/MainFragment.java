@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,6 +52,18 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         setupViews();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("mainFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("mainFragment");
     }
 
     private void setupViews(){
