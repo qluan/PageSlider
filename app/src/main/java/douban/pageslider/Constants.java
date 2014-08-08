@@ -15,14 +15,14 @@ public class Constants {
     /**
      * YouMi AD INFO
      */
-    public static final boolean ENABLE_YouMi_AD = true;
+    public static final boolean ENABLE_YouMi_AD = false;
     public static final String YouMi_APPId = "4fba6ece578e1822";
     public static final String YouMi_SpotPosId = "29d6a8ba68be8910";
 
     /**
      * DuoMeng AD INFO
      */
-    public static final boolean ENABLE_DuoMeng_AD = false;
+    public static final boolean ENABLE_DuoMeng_AD = true;
     public static final boolean ENABLE_REAL_TIME_SPLASH = true;
     public static final String DuoMeng_APPId = "56OJwEyouNCBZYRe8o";
     public static final String DuoMeng_SplashId = "16TLuVtvApvQsNU0X7NWq96i";

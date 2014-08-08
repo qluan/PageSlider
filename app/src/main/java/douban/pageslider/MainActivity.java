@@ -13,7 +13,7 @@ public class MainActivity extends BaseActivity{
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new MainFragment())
                     .commit();
         }

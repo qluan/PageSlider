@@ -1,29 +1,59 @@
 package douban.pageslider;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
+import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
 
 import net.youmi.android.spot.SpotDialogListener;
 import net.youmi.android.spot.SpotManager;
 
+import cn.domob.android.ads.DomobAdManager;
+import cn.domob.android.ads.DomobInterstitialAd;
+import cn.domob.android.ads.DomobInterstitialAdListener;
 import douban.pageslider.activity.BaseActivity;
 import douban.pageslider.model.Post;
 
 /**
  * Created by luanqian on 2014/8/4.
  */
-public class DetailActivity extends BaseActivity{
+public class DetailActivity extends BaseActivity {
 
     public static final String KEY_EXTRA_POST = "post";
 
     WebPageFragment mFragment;
 
+    DomobInterstitialAd mInterstitialAd;
+    Handler mUIHandler;
+
+    static final int MESSAGE_REQUEST = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        mUIHandler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                mUIHandler.removeCallbacksAndMessages(null);
+                mUIHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mInterstitialAd.isInterstitialAdReady()) {
+                            mInterstitialAd.showInterstitialAd(DetailActivity.this);
+                        } else {
+                            Log.i("DomobSDKDemo", "Interstitial Ad is not ready");
+                            mInterstitialAd.loadInterstitialAd();
+                        }
+                    }
+                }, 2000);
+            }
+        };
         if (Constants.ENABLE_YouMi_AD) {
             MobclickAgent.onEvent(this, "[youmi][detailpage]oncreate");
             SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
@@ -39,12 +69,74 @@ public class DetailActivity extends BaseActivity{
                     MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onFailShow");
                 }
             });
+        } else if (Constants.ENABLE_DuoMeng_AD) {
+            mInterstitialAd = new DomobInterstitialAd(this, Constants.DuoMeng_APPId,
+                    Constants.DuoMeng_SpotId, DomobInterstitialAd.INTERSITIAL_SIZE_300X250);
+
+            mInterstitialAd.setInterstitialAdListener(new DomobInterstitialAdListener() {
+                @Override
+                public void onInterstitialAdReady() {
+                    Log.i("DomobSDKDemo", "onAdReady");
+                }
+
+                @Override
+                public void onLandingPageOpen() {
+                    Log.i("DomobSDKDemo", "onLandingPageOpen");
+                }
+
+                @Override
+                public void onLandingPageClose() {
+                    Log.i("DomobSDKDemo", "onLandingPageClose");
+                }
+
+                @Override
+                public void onInterstitialAdPresent() {
+                    Log.i("DomobSDKDemo", "onInterstitialAdPresent");
+                }
+
+                @Override
+                public void onInterstitialAdDismiss() {
+                    // Request new ad when the previous interstitial ad was closed.
+                    mInterstitialAd.loadInterstitialAd();
+                    Log.i("DomobSDKDemo", "onInterstitialAdDismiss");
+                }
+
+                @Override
+                public void onInterstitialAdFailed(DomobAdManager.ErrorCode arg0) {
+                    Log.i("DomobSDKDemo", "onInterstitialAdFailed");
+                }
+
+                @Override
+                public void onInterstitialAdLeaveApplication() {
+                    Log.i("DomobSDKDemo", "onInterstitialAdLeaveApplication");
+
+                }
+
+                @Override
+                public void onInterstitialAdClicked(DomobInterstitialAd arg0) {
+                    Log.i("DomobSDKDemo", "onInterstitialAdClicked");
+                }
+            });
+
+            mInterstitialAd.loadInterstitialAd();
+
+            mUIHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mInterstitialAd.isInterstitialAdReady()) {
+                        mInterstitialAd.showInterstitialAd(DetailActivity.this);
+                    } else {
+                        Log.i("DomobSDKDemo", "Interstitial Ad is not ready");
+                        mInterstitialAd.loadInterstitialAd();
+                    }
+                }
+            }, 2000);
         }
         setupView();
     }
 
     private void setupView() {
-        mFragment = WebPageFragment.newInstance((Post)getIntent().getParcelableExtra(KEY_EXTRA_POST));
+        mFragment = WebPageFragment.newInstance((Post) getIntent().getParcelableExtra(KEY_EXTRA_POST));
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, mFragment);
         ft.commitAllowingStateLoss();
