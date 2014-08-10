@@ -29,6 +29,7 @@ public class DetailActivity extends BaseActivity {
 
     DomobInterstitialAd mInterstitialAd;
     Handler mUIHandler;
+    Handler mQuitHandler;
 
     static final int MESSAGE_REQUEST = 1;
 
@@ -36,24 +37,41 @@ public class DetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mUIHandler = new Handler(Looper.getMainLooper()){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                mUIHandler.removeCallbacksAndMessages(null);
-                mUIHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mInterstitialAd.isInterstitialAdReady()) {
-                            mInterstitialAd.showInterstitialAd(DetailActivity.this);
-                        } else {
-                            Log.i("DomobSDKDemo", "Interstitial Ad is not ready");
-                            mInterstitialAd.loadInterstitialAd();
+        mQuitHandler = new Handler(Looper.getMainLooper());
+        if (Constants.ENABLE_DuoMeng_AD) {
+            mUIHandler = new Handler(Looper.getMainLooper()){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    mUIHandler.removeCallbacksAndMessages(null);
+                    mUIHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mInterstitialAd.isInterstitialAdReady()) {
+                                mInterstitialAd.showInterstitialAd(DetailActivity.this);
+                            } else {
+                                Log.i("DomobSDKDemo", "Interstitial Ad is not ready");
+                                mInterstitialAd.loadInterstitialAd();
+                            }
                         }
-                    }
-                }, 2000);
+                    }, 2000);
+                }
+            };
+        }
+
+        setupView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mQuitHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DetailActivity.this.finish();
             }
-        };
+        }, 8000);
+
         if (Constants.ENABLE_YouMi_AD) {
             MobclickAgent.onEvent(this, "[youmi][detailpage]oncreate");
             SpotManager.getInstance(this).showSpotAds(this, new SpotDialogListener() {
@@ -67,6 +85,7 @@ public class DetailActivity extends BaseActivity {
                 public void onShowFailed() {
                     Log.i("Youmi", "onShowFailed");
                     MobclickAgent.onEvent(DetailActivity.this, "[youmi][spotAds] onFailShow");
+                    DetailActivity.this.finish();
                 }
             });
         } else if (Constants.ENABLE_DuoMeng_AD) {
@@ -77,6 +96,7 @@ public class DetailActivity extends BaseActivity {
                 @Override
                 public void onInterstitialAdReady() {
                     Log.i("DomobSDKDemo", "onAdReady");
+                    mInterstitialAd.showInterstitialAd(DetailActivity.this);
                 }
 
                 @Override
@@ -87,6 +107,7 @@ public class DetailActivity extends BaseActivity {
                 @Override
                 public void onLandingPageClose() {
                     Log.i("DomobSDKDemo", "onLandingPageClose");
+                    DetailActivity.this.finish();
                 }
 
                 @Override
@@ -99,17 +120,19 @@ public class DetailActivity extends BaseActivity {
                     // Request new ad when the previous interstitial ad was closed.
                     mInterstitialAd.loadInterstitialAd();
                     Log.i("DomobSDKDemo", "onInterstitialAdDismiss");
+                    DetailActivity.this.finish();
                 }
 
                 @Override
                 public void onInterstitialAdFailed(DomobAdManager.ErrorCode arg0) {
                     Log.i("DomobSDKDemo", "onInterstitialAdFailed");
+                    DetailActivity.this.finish();
                 }
 
                 @Override
                 public void onInterstitialAdLeaveApplication() {
                     Log.i("DomobSDKDemo", "onInterstitialAdLeaveApplication");
-
+                    DetailActivity.this.finish();
                 }
 
                 @Override
@@ -132,7 +155,6 @@ public class DetailActivity extends BaseActivity {
                 }
             }, 2000);
         }
-        setupView();
     }
 
     private void setupView() {
